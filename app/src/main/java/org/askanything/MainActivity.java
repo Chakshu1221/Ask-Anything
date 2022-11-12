@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     ResideMenu resideMenu;
     ResideMenuItem home;
+    ResideMenuItem appointment;
     ResideMenuItem profile;
 
 
@@ -43,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
                 resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
             }
         });
@@ -52,15 +52,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         resideMenu.setBackground(R.color.black);
         resideMenu.attachToActivity(this);
 
-        String titles[]={"Home","Profile"};
-        int icon[]={R.drawable.home,R.drawable.profile};
+        //String titles[]={"Home","My Appointments","Profile"};
+        //int icon[]={R.drawable.home,R.drawable.appointment_icon,R.drawable.profile};
 
         home=new ResideMenuItem(this,R.drawable.home,"HOME");
+        appointment=new ResideMenuItem(this,R.drawable.appointment_icon,"My Appointments");
         profile=new ResideMenuItem(this,R.drawable.profile,"PROFILE");
+
         resideMenu.addMenuItem(home,ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(appointment,ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(profile,ResideMenu.DIRECTION_LEFT);
 
         home.setOnClickListener(this);
+        appointment.setOnClickListener(this);
         profile.setOnClickListener(this);
 
 
@@ -86,7 +90,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (view==home){
             changeFrag(new Home());
-        } else if (view == profile) {
+        }
+        else if (view == appointment) {
+            changeFrag(new Appointments());
+        }
+        else if (view == profile) {
             changeFrag(new Profile());
         }
         resideMenu.closeMenu();

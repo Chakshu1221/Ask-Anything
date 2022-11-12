@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "579633383259",
+    "firebase_url": "https://tattoo-tample-default-rtdb.firebaseio.com",
+    "project_id": "tattoo-tample",
+    "storage_bucket": "tattoo-tample.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:579633383259:android:ddfe6d152076d297defc7e",
+        "android_client_info": {
+          "package_name": "com.tattootampleadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "579633383259-5ehpq3n7g9vgkv962msa3p7er2klvv8o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvvM9trkDD2mrwIe1rKOCqncnjxOlSrBU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "579633383259-5ehpq3n7g9vgkv962msa3p7er2klvv8o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:579633383259:android:9b25102f8036ad01defc7e",
+        "android_client_info": {
+          "package_name": "org.askanything"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "579633383259-5ehpq3n7g9vgkv962msa3p7er2klvv8o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvvM9trkDD2mrwIe1rKOCqncnjxOlSrBU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "579633383259-5ehpq3n7g9vgkv962msa3p7er2klvv8o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:579633383259:android:ec50236dd417800fdefc7e",
+        "android_client_info": {
+          "package_name": "org.tattootemple"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "579633383259-5ehpq3n7g9vgkv962msa3p7er2klvv8o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvvM9trkDD2mrwIe1rKOCqncnjxOlSrBU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "579633383259-5ehpq3n7g9vgkv962msa3p7er2klvv8o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

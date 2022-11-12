@@ -8,4 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#F80505</color>
+    <color name="_bg__home_page__color">#FFFFFF</color>
 </resources>

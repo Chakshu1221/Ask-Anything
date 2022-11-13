@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Dialog;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,10 +15,13 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.special.ResideMenu.ResideMenu;
 import com.special.ResideMenu.ResideMenuItem;
@@ -31,6 +35,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ResideMenuItem home;
     public static ResideMenuItem appointment;
     ResideMenuItem profile;
+    String bgurl;
+    GoogleSignInAccount account;
+    FirebaseAuth mAuth;
+    DatabaseReference reference;
+    public static CircleImageView profileimg;
 
 
 
@@ -43,11 +52,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             changeFrag(new Home());
         }
 
+        mAuth=FirebaseAuth.getInstance();
+        reference= FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getCurrentUser().getUid())
+                .child("Personal Data");
+        reference.keepSynced(true);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         ImageButton imageButton=findViewById(R.id.menuButton);
-        CircleImageView profileimg=findViewById(R.id.profileimg);
+        profileimg=findViewById(R.id.profileimg);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,25 +73,66 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }catch (Exception e){
 
         }
-        FirebaseDatabase.getInstance().getReference("Users").
+
+
+        try {
+            reference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    if (task.isSuccessful()){
+                        if (task.getResult().exists()){
+                            DataSnapshot dataSnapshot = task.getResult();
+                            boolean data;
+                            data=dataSnapshot.child("picurl").exists();
+                            if (data){
+                                bgurl=String.valueOf(dataSnapshot.child("picurl").getValue());
+                                Glide.with(MainActivity.this).load(Uri.parse(bgurl)).into(profileimg);
+                            }
+                            else if (account!=null){
+                                account= GoogleSignIn.getLastSignedInAccount(MainActivity.this);
+                                bgurl= String.valueOf(account.getPhotoUrl());
+                                Toast.makeText(MainActivity.this, ""+bgurl, Toast.LENGTH_SHORT).show();
+                                Glide.with(MainActivity.this).load(bgurl).into(profileimg);
+                            }
+                            else {
+                                profileimg.setImageResource(R.drawable.icon);
+                            }
+                        }
+                    }
+                }
+            });
+
+
+        }catch (Exception e){
+        }
+
+        /*FirebaseDatabase.getInstance().getReference("Users").
                 child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Personal Data").get()
                 .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         if (task.isSuccessful()){
                             DataSnapshot snapshot=task.getResult();
-                            String bgurl=snapshot.child("picurl").getValue().toString();
+                            bgurl=snapshot.child("picurl").getValue().toString();
                             Glide.with(MainActivity.this).load(bgurl).into(profileimg);
 
                         }
                     }
-                });
-        profileimg.setOnClickListener(new View.OnClickListener() {
+                });*/
+        /*profileimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Dialog dialog=new Dialog()
+                if (bgurl!=null && !bgurl.isEmpty() && bgurl!=""){
+                    ProfileDialog profileDialog=new ProfileDialog(Uri.parse(bgurl),MainActivity.this);
+                    profileDialog.showProfile();
+                }
+                else{
+                    Toast.makeText(MainActivity.this, "Add Picture first", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
-        });
+        });*/
 
         resideMenu=new ResideMenu(this);
         resideMenu.setBackground(R.color.back);

@@ -8,7 +8,18 @@
     <string name="facebook_application_id">515423167263607</string>
     <string name="fb_login_protocol_scheme">fb515423167263607</string>
     <string name="facebook_client_token">ed622f1099e00c819618206dc617b611</string>
-
+    <string name="are_you_sure_to_logout">Are you sure to logout</string>
+    <string name="session_logging_out">Sesssion Logging out</string>
+    <string name="setting_up_picture">setting up picture</string>
+    <string name="personal_information">Personal Information</string>
+    <string name="name">Name</string>
+    <string name="abcd_gmail_com">abc@gmail.com</string>
+    <string name="rating_and_reviews">Rating and Reviews</string>
+    <string name="submit">Submit</string>
+    <string name="account_and_settings">Account and Settings</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="profile_picture">Profile Picture</string>
 
 
 </resources>

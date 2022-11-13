@@ -1,37 +1,43 @@
 package org.askanything;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.TextClock;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.FirebaseDatabase;
 import com.special.ResideMenu.ResideMenu;
 import com.special.ResideMenu.ResideMenuItem;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     ResideMenu resideMenu;
     ResideMenuItem home;
-    ResideMenuItem appointment;
+    public static ResideMenuItem appointment;
     ResideMenuItem profile;
-
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_AskAnything);
         setContentView(R.layout.activity_main);
         if (savedInstanceState==null){
             changeFrag(new Home());
@@ -41,21 +47,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(toolbar);
 
         ImageButton imageButton=findViewById(R.id.menuButton);
+        CircleImageView profileimg=findViewById(R.id.profileimg);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
             }
         });
+        try{
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        }catch (Exception e){
+
+        }
+        FirebaseDatabase.getInstance().getReference("Users").
+                child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Personal Data").get()
+                .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (task.isSuccessful()){
+                            DataSnapshot snapshot=task.getResult();
+                            String bgurl=snapshot.child("picurl").getValue().toString();
+                            Glide.with(MainActivity.this).load(bgurl).into(profileimg);
+
+                        }
+                    }
+                });
+        profileimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog dialog=new Dialog()
+            }
+        });
 
         resideMenu=new ResideMenu(this);
-        resideMenu.setBackground(R.color.black);
+        resideMenu.setBackground(R.color.back);
         resideMenu.attachToActivity(this);
 
         //String titles[]={"Home","My Appointments","Profile"};
         //int icon[]={R.drawable.home,R.drawable.appointment_icon,R.drawable.profile};
 
         home=new ResideMenuItem(this,R.drawable.home,"HOME");
+
         appointment=new ResideMenuItem(this,R.drawable.appointment_icon,"My Appointments");
         profile=new ResideMenuItem(this,R.drawable.profile,"PROFILE");
 
@@ -107,4 +139,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
 
     }
+
 }

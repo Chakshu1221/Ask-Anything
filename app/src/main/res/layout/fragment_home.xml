@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Home"
+    android:backgroundTint="@color/back"
 
     android:background="@color/white">
 
@@ -22,22 +23,24 @@
         android:backgroundTint="@color/white"
         android:id="@+id/search"
         android:drawableEnd="@drawable/search"
+        android:drawableTint="@color/black"
         android:padding="15dp"
         android:maxLines="1"
         android:inputType="textPersonName"
-        android:hint="Search Tattoo"
+        android:hint="Search Latest Tattoo"
+        android:textColorHint="@color/black"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:drawableTint="@color/teal_200"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="15dp"
         android:layout_marginStart="15dp"
-        android:background="@drawable/rounded_corrnor2"
+        android:background="@drawable/rounded_corrnor3"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         />
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="50dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="60dp"
         android:orientation="vertical"
         android:id="@+id/tattoRecyclerView"
         android:layout_width="match_parent"

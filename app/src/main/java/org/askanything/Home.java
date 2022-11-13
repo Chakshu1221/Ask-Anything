@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -77,11 +78,12 @@ public class Home extends Fragment {
                 if (task.isSuccessful()){
                     DataSnapshot snapshot=task.getResult();
                     String bgurl=snapshot.child("homeBackground").getValue().toString();
-                    Glide.with(getActivity()).load(bgurl).into(home);
+                    //Glide.with(getActivity()).load(bgurl).into(home);
 
                 }
             }
         });
+
 
         DatabaseReference reference=FirebaseDatabase.getInstance().getReference();
         reference.keepSynced(true);
@@ -91,7 +93,7 @@ public class Home extends Fragment {
         homeTattooAdapter.startListening();
         homeTattooAdapter.notifyDataSetChanged();
 
-        tattoRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        tattoRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),1));
         tattoRecyclerView.setAdapter(homeTattooAdapter);
 
         // Inflate the layout for this fragment

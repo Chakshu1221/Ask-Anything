@@ -1,9 +1,280 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/scroolview"
     android:layout_height="match_parent"
-    tools:context=".CheckOutDesign">
+    tools:context=".CheckOutDesign"
+    android:background="@color/teal_200"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <ImageView
+                android:id="@+id/iii"
+                android:transitionName="transition"
+                android:layout_width="match_parent"
+                android:scaleType="center"
+                android:layout_height="300dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:backgroundTint="@color/teal_200"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/cprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="20dp"
+                android:ellipsize="marquee"
+                android:gravity="start"
+                android:layout_marginStart="10dp"
+                android:padding="5dp"
+                android:visibility="gone"
+                android:textColor="#0D1333"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/rounded_corrnor">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textColorHint="@color/black"
+                    android:textSize="20dp"
+                    android:padding="5dp"
+                    android:gravity="start"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:layout_marginEnd="20dp"
+                    android:focusableInTouchMode="false"
+                    android:hint="Choose Preferred Appointment Options :"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"/>
+
+                <TextView
+                    android:drawableEnd="@drawable/arrow_down"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/date"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:textSize="14dp"
+                    android:drawableTint="@color/black"
+                    android:padding="5dp"
+                    android:drawablePadding="5dp"
+                    android:drawableTintMode="multiply"
+                    android:gravity="start"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:layout_marginEnd="20dp"
+                    android:focusableInTouchMode="false"
+                    android:hint="Appointment Date"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="10dp"/>
+
+                <TextView
+                    android:drawableEnd="@drawable/arrow_down"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/time"
+                    android:editable="false"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textColorHint="@color/black"
+                    android:textSize="14dp"
+                    android:drawableTint="@color/black"
+                    android:padding="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:drawablePadding="5dp"
+                    android:drawableTintMode="multiply"
+                    android:gravity="start"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:layout_marginEnd="20dp"
+                    android:focusableInTouchMode="false"
+                    android:hint="Appointment Time"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/rounded_corrnor">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textColorHint="@color/black"
+                    android:textSize="20dp"
+                    android:padding="5dp"
+                    android:gravity="start"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:layout_marginEnd="20dp"
+                    android:focusableInTouchMode="false"
+                    android:hint="Choose Preferred Payment Option :"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"/>
+                <RadioGroup
+                    android:id="@+id/radioGrp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:paddingTop="20dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    >
+
+                    <RadioButton
+                        android:buttonTint="@color/black"
+                        android:id="@+id/radioM"
+                        android:visibility="gone"
+                        android:layout_width="0dp"
+                        android:textStyle="bold"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:checked="false"
+                        android:drawableTint="@color/black"
+                        android:drawableLeft="@drawable/paynow"
+                        android:layout_weight="1"
+                        android:textColor="@color/black"
+                        android:textSize="14dp"
+                        android:text="Pay Now"
+                        android:layout_marginBottom="10dp"
+                        />
+                    <RadioButton
+                        android:textColor="@color/black"
+                        android:buttonTint="@color/black"
+                        android:id="@+id/radioF"
+                        android:drawableTint="@color/black"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:checked="true"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="10dp"
+                        android:drawableLeft="@drawable/paylater"
+                        android:layout_weight="1"
+                        android:textSize="14dp"
+                        android:text="Pay Later"
+                        />
+                </RadioGroup>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Please Note Rs. 50+3.2% GST will be charge for appointment"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="20dp"
+                android:drawableStart="@drawable/note"
+                android:padding="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:textSize="14dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sub-Total :  51.6 INR"
+                android:textStyle="bold"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="10dp"
+                android:textSize="20dp"
+                />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="12dp"
+                android:id="@+id/note"
+                android:textStyle="italic"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginTop="90dp"
+                android:text="I have reed and agreed to the terms and conditions."
+                android:backgroundTint="@color/black"
+                android:buttonTint="@color/black"
+                />
+
+            <Button
+                android:id="@+id/book"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp"
+                android:padding="7dp"
+                android:backgroundTint="@color/black"
+                android:background="@color/teal_200"
+                android:text="Schedule Appointment"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                />
+
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</androidx.core.widget.NestedScrollView>

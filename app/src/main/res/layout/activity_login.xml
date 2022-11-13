@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
+
+
   <ScrollView
       android:background="@color/black"
       android:layout_width="match_parent"
@@ -25,7 +27,7 @@
           android:layout_width="match_parent"
           android:layout_height="450dp"
           android:layout_marginTop="0dp"
-          android:background="@color/_bg__home_page__color"
+          android:background="#F7F6F0"
           android:orientation="vertical"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +62,7 @@
           android:layout_marginTop="30dp"
           android:layout_marginEnd="20dp"
           android:background="@drawable/rounded_corrnor"
-          android:backgroundTint="@color/purple_200"
+          android:backgroundTint="#D3F36B"
           android:elevation="20dp"
           android:orientation="vertical"
           app:layout_constraintBottom_toBottomOf="parent"
@@ -122,14 +124,13 @@
               android:layout_marginTop="10dp"
               android:drawableStart="@drawable/human"
               android:drawablePadding="9dp"
-              android:gravity="start"
               android:hint="Enter your Name"
               android:inputType="textEmailAddress"
               android:padding="9dp"
               android:paddingStart="9dp"
               android:textColor="@color/black"
               android:textColorHint="#503737"
-              android:textSize="20dp"
+              android:textSize="15dp"
               android:textStyle="bold"
               android:visibility="gone" />
 
@@ -143,14 +144,14 @@
               android:layout_marginTop="30dp"
               android:drawableStart="@drawable/person_icon"
               android:drawablePadding="9dp"
-              android:gravity="start"
               android:hint="Enter your Email"
               android:inputType="textEmailAddress"
+              android:layout_gravity="center"
               android:padding="9dp"
               android:paddingStart="9dp"
               android:textColor="@color/black"
               android:textColorHint="#503737"
-              android:textSize="20dp"
+              android:textSize="15dp"
               android:textStyle="bold" />
 
           <EditText
@@ -163,14 +164,14 @@
               android:background="@drawable/rounded_corrnor"
               android:drawableStart="@drawable/password_icon"
               android:drawablePadding="9dp"
-              android:gravity="start"
               android:hint="Enter your Password"
               android:inputType="textPassword"
               android:padding="9dp"
+              android:layout_gravity="center"
               android:paddingStart="9dp"
               android:textColor="@color/black"
               android:textColorHint="#503737"
-              android:textSize="20dp"
+              android:textSize="15dp"
               android:textStyle="bold" />
 
           <TextView
@@ -197,34 +198,34 @@
 
           <Button
               android:id="@+id/buttonsignin"
-              android:layout_width="match_parent"
+              android:layout_width="wrap_content"
+              android:layout_gravity="center"
+              android:gravity="center"
               android:layout_height="wrap_content"
-              android:layout_marginStart="10dp"
-              android:layout_marginTop="30dp"
-              android:layout_marginEnd="10dp"
-              android:background="@drawable/rounded_corrnor"
-              android:layout_marginBottom="50dp"
-              android:backgroundTint="#0831FA"
-              android:padding="10dp"
+              android:layout_marginTop="10dp"
+              android:layout_marginBottom="30dp"
+              android:backgroundTint="@color/teal_200"
+              android:padding="7dp"
               android:text="Sign In"
-              android:textColor="@color/white"
-              android:textSize="30dp"
+              android:textAllCaps="false"
+              android:textColor="@color/black"
+              android:textSize="20dp"
               android:textStyle="bold" />
 
           <Button
               android:id="@+id/buttonsignup"
               android:background="@drawable/rounded_corrnor"
-              android:layout_width="match_parent"
+              android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              android:layout_gravity="center"
               android:layout_marginStart="10dp"
               android:layout_marginTop="30dp"
               android:layout_marginEnd="10dp"
               android:layout_marginBottom="50dp"
-              android:backgroundTint="#0831FA"
               android:padding="10dp"
               android:text="Sign Up"
-              android:textColor="@color/white"
-              android:textSize="30dp"
+              android:textColor="@color/black"
+              android:textSize="20dp"
               android:textStyle="bold"
               android:visibility="gone" />
 
@@ -269,14 +270,17 @@
               android:foregroundGravity="center"
               android:src="@drawable/google" />
 
-          <ImageView
+          <com.facebook.login.widget.LoginButton
               android:id="@+id/facebook"
-              android:layout_width="48dp"
-              android:layout_height="48dp"
               android:layout_gravity="center"
-              android:layout_marginStart="10dp"
+              android:layout_marginStart="30dp"
               android:foregroundGravity="center"
-              android:src="@drawable/facebook" />
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="30dp"
+              android:layout_marginBottom="30dp" />
+
+
 
 
         </LinearLayout>

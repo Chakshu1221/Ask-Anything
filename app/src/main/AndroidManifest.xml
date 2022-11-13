@@ -10,8 +10,21 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AskAnything"
+        android:theme="@style/splashscreeentheame"
         tools:targetApi="31">
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:label="@string/app_name" />
+
+
+        <activity
+            android:name=".Payment"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".CheckOutDesign"
             android:exported="false">
@@ -26,6 +39,9 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_application_id"/>
         <activity
             android:name=".LoginActivity"
             android:exported="true">

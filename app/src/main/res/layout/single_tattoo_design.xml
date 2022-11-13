@@ -2,8 +2,7 @@
     <com.google.android.material.card.MaterialCardView
     app:cardCornerRadius="10dp"
     android:elevation="30dp"
-    app:strokeColor="@color/_bg__home_page__color"
-    app:strokeWidth="6dp"
+    app:strokeWidth="4dp"
     android:layout_margin="15dp"
     android:backgroundTint="@color/white"
     android:layout_height="wrap_content"
@@ -34,15 +33,17 @@
 
 
         <TextView
+            android:background="@color/teal_200"
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="0.5dp"
             android:layout_marginTop="5dp"
             android:ellipsize="marquee"
             android:gravity="start"
             android:maxLines="2"
+            android:textStyle="bold"
             android:padding="5dp"
             android:text="Simple Design"
             android:textColor="#0D1333"

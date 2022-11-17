@@ -22,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -82,8 +84,7 @@ public class Profile extends Fragment {
 
         getName();
         getRate();
-
-
+        proimage.setImageResource(R.drawable.icon);
 
         proimage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,7 +179,10 @@ public class Profile extends Fragment {
                     if (task.getResult().exists()){
                         DataSnapshot dataSnapshot = task.getResult();
                         String rating = String.valueOf(dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue());
-                        ratingBar.setRating(Float.parseFloat(rating));
+                        try{ratingBar.setRating(Float.parseFloat(rating));}
+                        catch (Exception e){
+
+                        }
                     }
                 }
             }
@@ -202,7 +206,7 @@ public class Profile extends Fragment {
 
     //get nAme method
     private void getName() {
-
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
         reference.keepSynced(true);
         reference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -219,13 +223,23 @@ public class Profile extends Fragment {
                             namePro.setText(name1);
 
                         }
-                        else {
+                        else if (account!=null){
+                            namePro.setText(account.getDisplayName());
+
+
+                        }
+                        else{
                             namePro.setText("Hey User");
 
 
                         }
                         if (email1 != null || !email1.isEmpty() || !email1.equals("")) {
                             emailPro.setText(email1);
+
+                        }
+                        else if (account!=null){
+                            emailPro.setText(account.getEmail().toString());
+
 
                         }
                         else {
@@ -238,12 +252,23 @@ public class Profile extends Fragment {
                         data=dataSnapshot.child("picurl").exists();
                         if (data){
                             picurl=String.valueOf(dataSnapshot.child("picurl").getValue());
+                            if (picurl!= null && !picurl.isEmpty() && !picurl.equals("")) {
+                                Glide.with(getActivity()).load(Uri.parse(picurl)).into(proimage);
+                            }
+                            else if (account!=null){
+                                Glide.with(getActivity()).load(Uri.parse(account.getPhotoUrl().toString())).into(proimage);
+                            }
+                            else {
+                                proimage.setImageResource(R.drawable.icon);
 
-                            Glide.with(getActivity()).load(Uri.parse(picurl)).into(proimage);
+                            }
                         }
                         else if (picurl == null && picurl.isEmpty() && picurl.equals("")) {
                             proimage.setImageResource(R.drawable.icon);
 
+                        }
+                        else if (account!=null){
+                            Glide.with(getActivity()).load(Uri.parse(account.getPhotoUrl().toString())).into(proimage);
                         }
                         else {
                             proimage.setImageResource(R.drawable.icon);
@@ -251,12 +276,25 @@ public class Profile extends Fragment {
                         }
 
                     }
+                    else if (account!=null){
+                        namePro.setText(account.getDisplayName());
+                        emailPro.setText(account.getEmail());
+                        Glide.with(getActivity()).load(Uri.parse(account.getPhotoUrl().toString())).into(proimage);
+
+                    }
+
                     else {
                         namePro.setText("Hey User");
                         emailPro.setText("abc@gmail.com");
                         proimage.setImageResource(R.drawable.icon);
 
                     }
+                }
+                else if (account!=null){
+                    namePro.setText(account.getDisplayName());
+                    emailPro.setText(account.getEmail());
+                    Glide.with(getActivity()).load(Uri.parse(account.getPhotoUrl().toString())).into(proimage);
+
                 }
                 else {
                     namePro.setText("Hey User");
@@ -271,6 +309,8 @@ public class Profile extends Fragment {
                 Toast.makeText(getActivity(), ""+e.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+
+
     }
 
     //select image and upload

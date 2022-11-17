@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-sdk android:targetSdkVersion="27" android:minSdkVersion="19"
+        tools:overrideLibrary="com.razorpay"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -19,13 +21,6 @@
 
 
         <activity
-            android:name=".Payment"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".CheckOutDesign"
             android:exported="false">
             <meta-data
@@ -42,6 +37,9 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_application_id"/>
+        <activity android:name=".Payment"
+            android:exported="true"
+            />
         <activity
             android:name=".LoginActivity"
             android:exported="true">

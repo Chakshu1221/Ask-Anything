@@ -1,5 +1,7 @@
 package org.askanything;
 
+import static com.google.android.material.internal.ContextUtils.getActivity;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -18,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -35,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ResideMenuItem home;
     public static ResideMenuItem appointment;
     ResideMenuItem profile;
-    String bgurl;
+    String picurl;
     GoogleSignInAccount account;
     FirebaseAuth mAuth;
     DatabaseReference reference;
@@ -51,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (savedInstanceState==null){
             changeFrag(new Home());
         }
-
+        account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
         mAuth=FirebaseAuth.getInstance();
         reference= FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getCurrentUser().getUid())
                 .child("Personal Data");
@@ -73,38 +76,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }catch (Exception e){
 
         }
+        getName();
 
-
-        try {
-            reference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DataSnapshot> task) {
-                    if (task.isSuccessful()){
-                        if (task.getResult().exists()){
-                            DataSnapshot dataSnapshot = task.getResult();
-                            boolean data;
-                            data=dataSnapshot.child("picurl").exists();
-                            if (data){
-                                bgurl=String.valueOf(dataSnapshot.child("picurl").getValue());
-                                Glide.with(MainActivity.this).load(Uri.parse(bgurl)).into(profileimg);
-                            }
-                            else if (account!=null){
-                                account= GoogleSignIn.getLastSignedInAccount(MainActivity.this);
-                                bgurl= String.valueOf(account.getPhotoUrl());
-                                Toast.makeText(MainActivity.this, ""+bgurl, Toast.LENGTH_SHORT).show();
-                                Glide.with(MainActivity.this).load(bgurl).into(profileimg);
-                            }
-                            else {
-                                profileimg.setImageResource(R.drawable.icon);
-                            }
-                        }
-                    }
-                }
-            });
-
-
-        }catch (Exception e){
-        }
 
         /*FirebaseDatabase.getInstance().getReference("Users").
                 child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Personal Data").get()
@@ -193,6 +166,62 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 replace(R.id.main_frag,fragment,"fragment").
                 setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
 
+    }
+
+    private void getName() {
+        DatabaseReference referenceImage=FirebaseDatabase.getInstance().getReference("Users");
+        referenceImage.keepSynced(true);
+        referenceImage.child(mAuth.getCurrentUser().getUid())
+                .child("Personal Data").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    if (task.getResult().exists()) {
+                        DataSnapshot dataSnapshot = task.getResult();
+                        picurl = String.valueOf(dataSnapshot.child("picurl").getValue());
+                        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
+
+
+                        if (picurl != null && !picurl.isEmpty() && !picurl.equals("")) {
+                            Glide.with(MainActivity.this).load(Uri.parse(picurl)).into(profileimg);
+
+                        }
+                        else if (account != null) {
+                            picurl = String.valueOf(account.getPhotoUrl());
+                            Glide.with(MainActivity.this).load(picurl = String.valueOf(picurl)).into(profileimg);
+
+                        }  else {
+                            profileimg.setImageResource(R.drawable.icon);
+
+                        }
+
+                    }
+                    else if (account != null) {
+                        Glide.with(MainActivity.this).load(account.getPhotoUrl()).into(profileimg);
+                        picurl=String.valueOf(account.getPhotoUrl());
+                    }
+                    else {
+                        profileimg.setImageResource(R.drawable.icon);
+
+                    }
+                }
+                else if (account != null) {
+                    Glide.with(MainActivity.this).load(account.getPhotoUrl().toString()).into(profileimg);
+                    picurl=String.valueOf(account.getPhotoUrl().toString());
+
+
+                }
+                else {
+                    profileimg.setImageResource(R.drawable.icon);
+
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(MainActivity.this, ""+e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 }

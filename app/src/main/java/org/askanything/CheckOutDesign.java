@@ -33,7 +33,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -103,25 +105,6 @@ public class CheckOutDesign extends AppCompatActivity {
         } catch (Exception e) {
 
         }
-
-        /*DatePickerDialog.OnDateSetListener date =new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int day) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH,month);
-                myCalendar.set(Calendar.DAY_OF_MONTH,day);
-                updateLabel();
-            }
-        };*/
-
-        /*calender.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new DatePickerDialog(CheckOutDesign.this,date,myCalendar.
-                        get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.
-                        get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });*/
 
         calender.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -240,55 +223,16 @@ public class CheckOutDesign extends AppCompatActivity {
                     if (payData.equals("Pay Now")) {
                         startActivity(new Intent(CheckOutDesign.this, Payment.class));
                     } else {
+                        ArrayList<String> arr=new ArrayList();
+                        arr.add(imageurl.toString());
+                        arr.add(price);
+                        arr.add(name);
+                        arr.add(date);
+                        arr.add(time);
+                        arr.add(payData);
 
-                        FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().
-                                        getCurrentUser().getUid()).child("Personal Data").get().
-                                addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                        if (task.isSuccessful()) {
-                                            DataSnapshot dataSnapshot = task.getResult();
-                                            cusomerName = dataSnapshot.child("name").getValue().toString();
-                                            cusomerEmail = dataSnapshot.child("email").getValue().toString();
-                                            AppointmentModel appointmentModel = new AppointmentModel(imageurl, price, name, date, time, payData, "pending", "" + cusomerName, "" + cusomerEmail,
-                                                    "" + FirebaseAuth.getInstance().getCurrentUser().getUid());
-                                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-                                            reference.child("Users").child(FirebaseAuth.getInstance().getCurrentUser()
-                                                            .getUid()).child("My Appointments").child(name)
-                                                    .setValue(appointmentModel).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<Void> task) {
-                                                            reference.child("All Appointments").child("" + FirebaseAuth.getInstance().getCurrentUser().getUid() + name)
-                                                                    .setValue(appointmentModel);
-
-                                                            Snackbar.make(CheckOutDesign.this.findViewById(android.R.id.content),
-                                                                    (CharSequence) "Appointment Sent", Snackbar.LENGTH_LONG).setBackgroundTint(Color.WHITE).show();
-                                                            Snackbar.make(CheckOutDesign.this.findViewById(android.R.id.content),(CharSequence)
-                                                                            "Appointment Sent! Please go in your Appointment Section to confirm payment", Snackbar.LENGTH_INDEFINITE)
-                                                                    .setAction("OK", new View.OnClickListener() {
-                                                                        @Override
-                                                                        public void onClick(View view) {
-                                                                            startActivity(new Intent(CheckOutDesign.this,MainActivity.class));
-                                                                        }
-                                                                    }).setBackgroundTint(Color.WHITE).show();
-
-                                                            calender.setText("Choose Preferred Appointment Date");
-                                                            timeDialog.setText("Choose Preferred Appointment Time");
-                                                            note.setChecked(false);
-
-                                                        }
-                                                    }).addOnFailureListener(new OnFailureListener() {
-                                                        @Override
-                                                        public void onFailure(@NonNull Exception e) {
-                                                            Snackbar.make(CheckOutDesign.this.findViewById(android.R.id.content),
-                                                                    (CharSequence) e.getMessage(), Snackbar.LENGTH_LONG).setBackgroundTint(Color.WHITE).show();
-
-                                                        }
-                                                    });
-                                        }
-                                    }
-
-                                });
+                        startActivity(new Intent(CheckOutDesign.this,Payment.class).putExtra("array",arr));
+                        //sendApp();
                     }
 
                 }
@@ -296,6 +240,57 @@ public class CheckOutDesign extends AppCompatActivity {
         });
 
     }
+
+    //function for send the appointment
+  /* private void sendApp() {
+        FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().
+                        getCurrentUser().getUid()).child("Personal Data").get().
+                addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DataSnapshot dataSnapshot = task.getResult();
+                            cusomerName = dataSnapshot.child("name").getValue().toString();
+                            cusomerEmail = dataSnapshot.child("email").getValue().toString();
+                            AppointmentModel appointmentModel = new AppointmentModel(imageurl, price, name, date, time, payData, "pending", "" + cusomerName, "" + cusomerEmail,
+                                    "" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                            reference.child("Users").child(FirebaseAuth.getInstance().getCurrentUser()
+                                            .getUid()).child("My Appointments").child(name)
+                                    .setValue(appointmentModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            reference.child("All Appointments").child("" + FirebaseAuth.getInstance().getCurrentUser().getUid() + name)
+                                                    .setValue(appointmentModel);
+                                            Snackbar.make(CheckOutDesign.this.findViewById(android.R.id.content),
+                                                    (CharSequence) "Appointment Sent", Snackbar.LENGTH_LONG).setBackgroundTint(Color.WHITE).show();
+                                            Snackbar.make(CheckOutDesign.this.findViewById(android.R.id.content),(CharSequence)
+                                                            "Appointment Sent! Please go in your Appointment Section to confirm payment", Snackbar.LENGTH_INDEFINITE)
+                                                    .setAction("OK", new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View view) {
+                                                            startActivity(new Intent(CheckOutDesign.this,MainActivity.class));
+                                                        }
+                                                    }).setBackgroundTint(Color.WHITE).show();
+
+                                            calender.setText("Choose Preferred Appointment Date");
+                                            timeDialog.setText("Choose Preferred Appointment Time");
+                                            note.setChecked(false);
+
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Snackbar.make(CheckOutDesign.this.findViewById(android.R.id.content),
+                                                    (CharSequence) e.getMessage(), Snackbar.LENGTH_LONG).setBackgroundTint(Color.WHITE).show();
+
+                                        }
+                                    });
+                        }
+                    }
+
+                });
+    }*/
 
     /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {

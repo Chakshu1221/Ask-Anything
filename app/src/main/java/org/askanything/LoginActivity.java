@@ -76,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
     private LoginManager loginManager;
     ProgressBar progressBar;
     ImageView google;
+    String picurl="";
     LoginButton facebook;
     FirebaseAuth mAuth;
     GoogleSignInClient mGoogleSignInClient;
@@ -343,7 +344,7 @@ public class LoginActivity extends AppCompatActivity {
                                     if (task.isSuccessful()){
                                         SignUpConstructor signUpConstructor=
                                                 new SignUpConstructor(""+name
-                                                        .getText().toString(),""+ email1);
+                                                        .getText().toString(),""+ email1,""+ picurl);
                                         reference.child(mAuth.
                                                         getCurrentUser().getUid()).child("Personal Data").setValue(signUpConstructor)
                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -564,8 +565,8 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
-                            SignUpConstructor signUpConstructor=new SignUpConstructor(""+ account.getDisplayName(),""+ account.getEmail());
-                            reference.child(mAuth.getCurrentUser().getUid()).child("Personal Data").setValue(signUpConstructor);
+                            //SignUpConstructor signUpConstructor=new SignUpConstructor(""+ account.getDisplayName(),""+ account.getEmail());
+                            //reference.child(mAuth.getCurrentUser().getUid()).child("Personal Data").setValue(signUpConstructor);
                             startActivity(new Intent(getApplicationContext(),MainActivity.class));
                             finish();
 
